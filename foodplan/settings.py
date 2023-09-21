@@ -32,6 +32,11 @@ DEBUG = env('DEBUG')
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 
+# For CustomUser model
+AUTH_USER_MODEL = 'baseapp.CustomUser'
+AUTHENTICATION_BACKENDS = ['baseapp.backends.EmailBackend']
+
+
 # Application definition
 
 INSTALLED_APPS = [

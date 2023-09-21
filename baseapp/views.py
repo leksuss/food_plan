@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .forms import CustomUserCreationForm
 
 
 def index(request):
@@ -27,3 +28,6 @@ def register(request):
 
 def contacts(request):
     return render(request, 'contacts.html')
+
+def authenticate(request):
+    return render(request, 'auth/auth.html')
