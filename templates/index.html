@@ -2,12 +2,8 @@
 
 {% load static %}
 
-{% block title %}
-    План питания на неделю, меню, рецепты, список покупок. Классическое меню, безуглеводное меню
-{% endblock %}
-
 {% block header_buttons %}
-    <button class="btn shadow-none btn-outline-success foodplan_green foodplan__border_green">Войти</button>
+    <a href="{% url '' %}" class="btn shadow-none btn-outline-success foodplan_green foodplan__border_green">Войти</a>
 {% endblock %}
 
 {% block main %}
@@ -21,7 +17,7 @@
                             Вы получаете рецепты + список продуктов.<br>
                             Больше не нужно думать, что готовить.</h4>
                         <div class="d-block mt-3">
-                            <button class="btn shadow-none btn-outline-success foodplan_green foodplan__border_green">Хочу попробовать</button>
+                            <a class="btn shadow-none btn-outline-success foodplan_green foodplan__border_green" href="{% url 'free_dish' %}">Хочу попробовать</a>
                         </div>
                     </div>
                 </div>
@@ -139,10 +135,10 @@
                         <h4>Открывайте меню в мобильном приложении, на компьютере, планшете, или распечатывайте на принтере.</h4>
                         <h4>Создавайте свою личную коллекцию избранных рецептов.</h4>
                         <div class="d-block py-5">
-                            <button class="btn shadow-none btn-outline-success foodplan_green foodplan__border_green me-2 mb-2">Загрузите в App
-                                Store</button>
-                            <button class="btn shadow-none btn-outline-success foodplan_green foodplan__border_green me-2 mb-2">Загрузите в Google
-                                Play</button>
+                            <a href="https://apps.apple.com/today" target="_blank" class="btn shadow-none btn-outline-success foodplan_green foodplan__border_green me-2 mb-2">Загрузите в App
+                                Store</a>
+                            <a href="https://play.google.com/store/" target="_blank" class="btn shadow-none btn-outline-success foodplan_green foodplan__border_green me-2 mb-2">Загрузите в Google
+                                Play</a>
                         </div>
                     </div>
                 </div>
