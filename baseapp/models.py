@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.core.validators import MinValueValidator
@@ -12,11 +11,8 @@ class MealType(models.Model):
         max_length=50,
     )
 
-    price = models.DecimalField(
+    price = models.PositiveIntegerField(
         'Цена',
-        max_digits=8,
-        decimal_places=2,
-        default=100,
         validators=[MinValueValidator(1)],
     )
 
@@ -42,7 +38,6 @@ class Dish(models.Model):
 
     recipe = models.TextField(
         'Рецепт',
-        max_length=200,
         blank=True,
     )
 
@@ -51,7 +46,7 @@ class Dish(models.Model):
         upload_to='dishes_images',
     )
 
-    is_free = models.BinaryField(
+    is_free = models.BooleanField(
         'Бесплатное',
         default=False,
     )
@@ -77,16 +72,13 @@ class Ingredient(models.Model):
         max_length=50,
     )
 
-    calories = models.DecimalField(
+    calories = models.PositiveIntegerField(
         'Количество калорий',
-        decimal_places=2,
-        max_digits=7,
+        validators=[MinValueValidator(1)],
     )
 
-    price = models.DecimalField(
+    price = models.PositiveIntegerField(
         'Цена ингредиента',
-        max_digits=8,
-        decimal_places=2,
         validators=[MinValueValidator(1)],
     )
 
@@ -128,7 +120,7 @@ class DishIngredientItem(models.Model):
         verbose_name_plural = 'Ингредиенты в блюде'
 
     def __str__(self):
-        return f'{self.ingredient.name} для {self.dish.name}.'
+        return f'{self.ingredient.name} для {self.dish.name}'
 
 
 class MenuCategory(models.Model):
@@ -140,7 +132,7 @@ class MenuCategory(models.Model):
     dish = models.ManyToManyField(
         Dish,
         verbose_name='Блюдо',
-        related_name='type_of_menu',
+        related_name='menu_categories',
     )
 
     class Meta:
@@ -162,10 +154,17 @@ class Allergy(models.Model):
         related_name='allergies',
     )
 
+    class Meta:
+        verbose_name = 'Аллергия'
+        verbose_name_plural = 'Аллергии'
+
+    def __str__(self):
+        return self.name
+
 
 class Subscription(models.Model):
     user = models.ForeignKey(
-        User,
+        'CustomUser',
         verbose_name='Пользователь',
         on_delete=models.CASCADE,
         related_name='subscriptions',
@@ -180,7 +179,7 @@ class Subscription(models.Model):
     )
 
     allergies = models.ManyToManyField(
-        MealType,
+        Allergy,
         verbose_name='Аллергии',
         related_name='allergy_subscriptions',
         null=True,
@@ -206,7 +205,7 @@ class Subscription(models.Model):
     portion_quantity = models.PositiveIntegerField(
         'Количество персон',
         default=1,
-        validators=[MinValueValidator(0)],
+        validators=[MinValueValidator(1)],
     )
 
     class Meta:
@@ -214,7 +213,8 @@ class Subscription(models.Model):
         verbose_name_plural = 'Подписки'
 
     def __str__(self):
-        return self.user.name
+        return self.user.email
+
 
 class CustomUserManager(BaseUserManager):
     """
