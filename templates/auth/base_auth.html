@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block header_buttons %}
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse1"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse1">
+        <ul class="navbar-nav w-100">
+
+            <li class="nav-item align-items-center d-md-flex flex-grow-1 justify-content-end">
+                <button class="btn btn-outline-success me-2 shadow-none foodplan_green foodplan__border_green">Подписка</button>
+                <button class="btn btn-outline-success shadow-none foodplan_green foodplan__border_green">Войти</button>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block main %}
+    <main style="margin-top: calc(2rem + 85px);">
+        <section>
+            <div class="container">
+                <div class="card p-3 mb-5 foodplan__shadow">
+                    <a href="#" class="link-secondary fw-light foodplan__backButton">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="9%" height="9%" fill="currentColor" class="bi bi-arrow-left-circle"
+                            viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
+                        </svg>
+                    </a>
+                    <h2 class="text-center"><strong>Авторизация</strong></h2>
+                </div>
+
+                {% block auth_main %}
+
+                {% endblock %}
+            </div>
+        </section>
+    </main>
+{% endblock %}

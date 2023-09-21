@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <main style="margin-top: calc(2rem + 85px);">
+        <section>
+            <div class="container">
+                <div class="card p-3 mb-5 foodplan__shadow">
+                    <h2 class="text-center"><strong>Контакты</strong></h2>
+                          <div class="contacts__elems">
+                            <div class="contacts__map" style="float:left;">
+                                <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A51f6200e26ec9e7e6f45bbb6773a37f8972a466787055a7806e4e532aa00464d&amp;width=466&amp;height=367&amp;lang=ru_RU&amp;scroll=true"></script>
+                            </div>
+                            <div class="contacts__block" style="float:left;margin:50px 0 0 50px;">
+                              <p>г. Караганда, улица Абая, 26</p>
+                              <p>+79871987123</p>
+                                <p><a href="mailto:feedback@foodplan.ru">feedback@foodplan.ru</a></p>
+                            </div>
+
+                          </div>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}
