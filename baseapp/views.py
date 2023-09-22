@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm
 
 
@@ -12,6 +13,7 @@ def order(request):
     return render(request, 'order.html')
 
 
+@login_required(login_url='auth')
 def lk(request):
     return render(request, 'lk.html')
 
@@ -25,6 +27,8 @@ def dish(request, dish_id=None):
 
 
 def register(request):
+    if request.user.is_authenticated:
+        return redirect('index')
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
@@ -47,4 +51,6 @@ def contacts(request):
 
 
 def auth(request):
+    if request.user.is_authenticated:
+        return redirect('index')
     return render(request, 'auth/auth.html')
