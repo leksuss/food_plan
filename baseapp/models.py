@@ -131,7 +131,7 @@ class MenuCategory(models.Model):
 
     dish = models.ManyToManyField(
         Dish,
-        verbose_name='Блюдо',
+        verbose_name='Блюда',
         related_name='menu_categories',
     )
 
