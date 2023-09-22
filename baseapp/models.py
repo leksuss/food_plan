@@ -177,7 +177,6 @@ class Subscription(models.Model):
         Dish,
         verbose_name='Сегодняшние блюда подписки',
         related_name='dish_subscriptions',
-        null=True,
         blank=True,
     )
 
@@ -185,7 +184,6 @@ class Subscription(models.Model):
         Allergy,
         verbose_name='Аллергии',
         related_name='allergy_subscriptions',
-        null=True,
         blank=True,
     )
 
@@ -193,7 +191,6 @@ class Subscription(models.Model):
         MealType,
         verbose_name='Типы приемов пищи',
         related_name='subscriptions',
-        null=True,
         blank=True,
     )
 
