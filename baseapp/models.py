@@ -32,13 +32,12 @@ class Dish(models.Model):
 
     description = models.TextField(
         'Описание',
-        max_length=200,
+        max_length=500,
         blank=True,
     )
 
     recipe = models.TextField(
         'Рецепт',
-        blank=True,
     )
 
     image = models.ImageField(
@@ -58,6 +57,15 @@ class Dish(models.Model):
         related_name='dishes',
     )
 
+    calories = models.PositiveIntegerField(
+        'Количество калорий',
+        validators=[MinValueValidator(1)],
+    )
+
+    cooking_time = models.TimeField(
+        'Время приготовления'
+    )
+
     class Meta:
         verbose_name = 'Блюдо'
         verbose_name_plural = 'Блюда'
@@ -70,11 +78,6 @@ class Ingredient(models.Model):
     name = models.CharField(
         'Название ингредиента',
         max_length=50,
-    )
-
-    calories = models.PositiveIntegerField(
-        'Количество калорий',
-        validators=[MinValueValidator(1)],
     )
 
     price = models.PositiveIntegerField(
