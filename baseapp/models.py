@@ -138,6 +138,13 @@ class MenuCategory(models.Model):
         related_name='menu_categories',
     )
 
+    image = models.ImageField(
+        'Картинка',
+        upload_to='menu_category_images',
+        blank=True,
+        null=True,
+    )
+
     class Meta:
         verbose_name = 'Вид диеты'
         verbose_name_plural = 'Виды диеты'
@@ -194,6 +201,14 @@ class Subscription(models.Model):
         blank=True,
     )
 
+    menu_category = models.ForeignKey(
+        MenuCategory,
+        verbose_name='Категория меню',
+        on_delete=models.CASCADE,
+        related_name='subscriptions',
+        null=True,
+    )
+
     created_at = models.DateTimeField(
         verbose_name='Дата создания подписки',
         auto_now_add=True,
@@ -206,6 +221,18 @@ class Subscription(models.Model):
         'Количество персон',
         default=1,
         validators=[MinValueValidator(1)],
+    )
+
+    is_paid = models.BooleanField(
+        'Подписка оплачена?',
+        default=False,
+    )
+
+    payment_id = models.CharField(
+        'Идентификатор платежного агента',
+        max_length=250,
+        null=True,
+        blank=True,
     )
 
     class Meta:
