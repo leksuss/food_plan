@@ -8,8 +8,47 @@ class CustomAuthentication(AuthenticationForm):
 
 
 class CustomUserCreationForm(UserCreationForm):
-    email = forms.EmailField(required=True)
+    email = forms.EmailField(
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите e-mail'
+            }
+        )
+    )
+    name = forms.CharField(
+        required=True,
+        max_length=150,
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите имя',
+                'autofocus': True,
+            }
+        )
+    )
+    password1 = forms.CharField(
+        required=True,
+        max_length=50,
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите пароль',
+            }
+        )
+    )
+    password2 = forms.CharField(
+        required=True,
+        max_length=50,
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Повторите пароль',
+            }
+        )
+    )
 
     class Meta:
         model = get_user_model()
-        fields = ('email', 'password1', 'password2')
+        fields = ('name', 'email', 'password1', 'password2')

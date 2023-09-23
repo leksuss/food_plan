@@ -30,7 +30,9 @@ urlpatterns = [
     path('lk/', baseapp.views.lk, name='lk'),
     path('contacts/', baseapp.views.contacts, name='contacts'),
     path('register/', baseapp.views.register, name='register'),
+    path('register/<str:redirect_to_order>', baseapp.views.register, name='register'),
     path('admin/', admin.site.urls),
-    path('auth/', baseapp.views.authenticate, name='authenticate'),
+    path('auth/', baseapp.views.auth, name='auth'),
+    path('logged_out/', baseapp.views.logged_out, name='logout'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
