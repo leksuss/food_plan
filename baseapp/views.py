@@ -9,7 +9,7 @@ from django.http import Http404
 
 from yookassa import Configuration, Payment
 
-from .forms import CustomUserCreationForm, OrderForm
+from .forms import CustomUserCreationForm, CustomAuthentication, OrderForm
 from .models import Dish, Subscription, MealType
 from foodplan.settings import BASE_PRICE, BULK_DISCOUNT, SITE_URL, YKASSA_SHOP_ID, YKASSA_SECRET_KEY
 
@@ -148,14 +148,27 @@ def register(request, redirect_to_order='False'):
     return render(request, 'auth/register.html', context=context)
 
 
-def contacts(request):
-    return render(request, 'contacts.html')
-
-
 def auth(request):
+
+    context = {
+        'user_not_found_error': False,
+    }
     if request.user.is_authenticated:
         return redirect('index')
-    return render(request, 'auth/auth.html')
+    if request.method == 'POST':
+        user = authenticate(username=request.POST.get('email'), password=request.POST.get('password1'))
+        if user is not None:
+            login(request, user)
+            return redirect('index')
+        else:
+            form = CustomAuthentication()
+            context['user_not_found_error'] = True
+    else:
+        form = CustomAuthentication()
+
+    context['form'] = form
+
+    return render(request, 'auth/auth.html', context=context)
 
 
 @login_required(login_url='auth')
@@ -163,3 +176,7 @@ def logged_out(request):
     if request.user.is_authenticated:
         logout(request)
     return render(request, 'auth/logged_out.html')
+
+
+def contacts(request):
+    return render(request, 'contacts.html')

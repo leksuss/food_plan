@@ -13,7 +13,22 @@ class MultiMealTypeField(forms.MultipleChoiceField):
 
 
 class CustomAuthentication(AuthenticationForm):
-    email = forms.EmailField(widget=forms.TextInput(attrs={'autofocus': True}))
+    email = forms.EmailField(
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                'autofocus': True,
+                'class': 'form-control',
+            })
+    )
+    password1 = forms.CharField(
+        required=True,
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control',
+            }
+        )
+    )
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -27,12 +42,11 @@ class CustomUserCreationForm(UserCreationForm):
         )
     )
     name = forms.CharField(
-        required=True,
         max_length=150,
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
-                'placeholder': 'Введите имя',
+                'placeholder': 'Введите имя (не обязательно)',
                 'autofocus': True,
             }
         )

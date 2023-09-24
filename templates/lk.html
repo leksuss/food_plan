@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block header_buttons %}
-    <button class="btn btn-outline-success shadow-none foodplan_green foodplan__border_green">Выйти</button>
+    <a href="{% url 'logout' %}" class="btn btn-outline-success shadow-none foodplan_green foodplan__border_green">Выйти</a>
 {% endblock %}
 
 {% block main %}

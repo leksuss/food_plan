@@ -1,29 +1,27 @@
 {% extends 'auth/base_auth.html' %}
-
+{% block header_buttons %}
+    <a href="{% url 'auth' %}" class="btn btn-outline-success shadow-none foodplan_green foodplan__border_green">Войти</a>
+{% endblock %}
 {% block auth_main %}
 <div class="card px-5 py-3 d-flex align-items-center foodplan__shadow">
     <form action="#" method="post">
         {% csrf_token %}
         <h1 class="mb-4 text-center"><strong>Регистрация</strong></h1>
         <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Имя</label>
-<!--            <input type="text" class="form-control" id="name">-->
-            {{ form.name }}
-        </div>
-        <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Email</label>
             {{ form.email }}
-<!--            <input type="email" class="form-control" id="email" aria-describedby="emailHelp">-->
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Имя</label>
+            {{ form.name }}
         </div>
         <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Пароль</label>
             {{ form.password1 }}
-<!--            <input type="password" class="form-control" id="password">-->
         </div>
         <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Подтверждение пароля</label>
             {{ form.password2 }}
-<!--            <input type="password" class="form-control" id="PasswordConfirm">-->
         </div>
         {% if form.errors %}
             <div class=" alert alert-info" role="alert">
