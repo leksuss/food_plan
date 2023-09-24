@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load baseapp_extras %}
+
+{% block main %}
+    <main style="margin-top: calc(2rem + 85px);">
+        <section>
+            <div class="container">
+                <div class="card p-3 mb-5 foodplan__shadow">
+                    <h2 class="text-center"><strong>Ваша подписка:</strong></h2>
+                        <table>
+                            <tr>
+                                <td>Тип диеты:</td>
+                                <td>{{ subscription.menu_category }}</td>
+                            </tr>
+                            <tr>
+                                <td>Срок подписки:</td>
+                                <td>{{ month_count }} {{ month_count|ru_plural:"месяц,месяца,месяцев" }} (до {{ subscription.expires_at }})</td>
+                            </tr>
+                            <tr>
+                                <td>Типы приема пищи:</td>
+                                <td>{{ subscription.meal_types.all|join:", " }}</td>
+                            </tr>
+                            <tr>
+                                <td>Количество персон:</td>
+                                <td>{{ subscription.portion_quantity }}</td>
+                            </tr>
+                            <tr>
+                                <td>Аллергии:</td>
+                                <td>{{ subscription.allergies.all|join:", "|default:"Нет" }}</td>
+                            </tr>
+                            <tr>
+                                <td>Стоимость:</td>
+                                <td>{{ price }} {{ price|ru_plural:"рубль,рубля,рублей" }}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><br><br><button type="submit" class="btn shadow-none btn-outline-success foodplan_green foodplan__border_green w-50">Оплатить</button>
+</td>
+                            </tr>
+                        </table>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}
