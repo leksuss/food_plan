@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load baseapp_extras %}
+
+{% block main %}
+    <main style="margin-top: calc(2rem + 85px);">
+        <section>
+            <div class="container">
+                <div class="card p-3 mb-5 foodplan__shadow">
+                    <h2 class="text-center"><strong>Результат оплаты</strong></h2>
+                    <div>
+                        {% if subscription.is_paid %}
+                            Ваша подписка №{{ subscription.id }} успешно оплачена! <br>
+                              Спасибо за заказ. Уже сейчас вы можете получить рецепты блюд на сегодня:
+                            <a href="/lk/">Перейти в личный кабинет</a>
+                        {% else %}
+                              Возникла проблема с оплатой подписки №{{ subscription.id }}! <br>
+                              Пожалуйста, обновите страницу чуть позже, дождитесь финального статуса оплаты. <br>
+                              Если Вы не оплачивали заказ, пожалуйста, создайте его заново. Спасибо.
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}

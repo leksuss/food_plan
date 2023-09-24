@@ -142,3 +142,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 BASE_PRICE = 50  # in rubles
 BULK_DISCOUNT = 20  # in percent
+
+YKASSA_SHOP_ID = env('YKASSA_SHOP_ID')
+YKASSA_SECRET_KEY = env('YKASSA_SECRET_KEY')
+SITE_URL = env('SITE_URL')
