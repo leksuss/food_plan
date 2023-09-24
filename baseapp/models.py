@@ -201,7 +201,7 @@ class Subscription(models.Model):
         blank=True,
     )
 
-    menu_category = models.ForeignKey(
+    menu_categories = models.ForeignKey(
         MenuCategory,
         verbose_name='Категория меню',
         on_delete=models.CASCADE,
