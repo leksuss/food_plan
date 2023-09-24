@@ -139,3 +139,6 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+BASE_PRICE = 50  # in rubles
+BULK_DISCOUNT = 20  # in percent
