@@ -1,8 +1,12 @@
+from collections import Counter
+import random
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.core.validators import MinValueValidator
 from django.contrib.auth.base_user import BaseUserManager
 from django.utils.translation import gettext_lazy as _
+from django.db.models import Prefetch
 
 
 class MealType(models.Model):
@@ -237,6 +241,76 @@ class Subscription(models.Model):
 
     def calorie_count(self):
         return sum([dish.calories for dish in self.today_dishes.all()])
+
+
+    def set_today_dishes(self):
+        self.today_dishes.set('')
+        self.save()
+        subscription_allergies = self.allergies.all()
+        dishes = Dish.objects.filter(
+            is_free=False,
+            menu_category=self.menu_category
+        ).prefetch_related(
+            Prefetch(
+                'dish_items',
+                queryset=DishIngredientItem.objects.all().prefetch_related(
+                    Prefetch(
+                        'ingredient',
+                        queryset=Ingredient.objects.filter(
+                            allergies__in=subscription_allergies,
+                        )
+                    )
+                )
+            )
+        )
+
+        if subscription_allergies:
+            allergies_ingredients = []
+            for allergy in subscription_allergies:
+                allergy_ingredients = []
+                for ingredient in allergy.ingredients.all():
+                    for ingredient_item in ingredient.ingredient_items.all():
+                        ingredient = ingredient_item.ingredient
+                        if ingredient not in allergy_ingredients:
+                            allergy_ingredients.append(ingredient)
+
+                allergies_ingredients += allergy_ingredients
+
+            allergies_ingredients_counter = Counter(allergies_ingredients)
+
+            available_ingredients = [
+                ingredient for ingredient in allergies_ingredients_counter if
+                allergies_ingredients_counter[ingredient] == len(subscription_allergies)
+            ]
+
+            available_dishes = []
+
+            for dish in dishes:
+                available_dish = True
+                dish_items = dish.dish_items.all()
+                for dish_item in dish_items:
+                    ingredient = dish_item.ingredient
+                    if ingredient not in available_ingredients:
+                        available_dish = False
+                        break
+
+                if available_dish:
+                    available_dishes.append(dish)
+
+        else:
+            available_dishes = dishes
+
+        for meal_type in self.meal_types.all():
+            meal_type_dishes = []
+            for dish in available_dishes:
+                if dish.meal_type == meal_type:
+                    meal_type_dishes.append(dish)
+
+            if meal_type_dishes:
+                today_dish = random.choice(meal_type_dishes)
+
+                self.today_dishes.add(today_dish)
+                self.save()
 
 
     class Meta:
