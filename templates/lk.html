@@ -122,6 +122,10 @@
                                             </div>
                                         </div>
                                     </div>
+                                {% empty %}
+                                    <div class="row" style="margin:30px;">
+                                        У вас нет активных подписок. <a href="{% url 'order' %}">Оформите подписку</a> для получения новых рецептов.
+                                    </div>
                                 {% endfor %}
                             </div>
                         </div>
