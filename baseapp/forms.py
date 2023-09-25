@@ -77,6 +77,63 @@ class CustomUserCreationForm(UserCreationForm):
         fields = ('email', 'password1', 'password2')
 
 
+class PersonalInfoProfileForm(forms.ModelForm):
+
+    name = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+            }
+        )
+    )
+
+    email = forms.EmailField(
+        widget=forms.EmailInput(
+            attrs={
+                'readonly': True,
+                'class': 'form-control',
+            }
+        )
+    )
+
+    password1 = forms.CharField(
+        required=True,
+        max_length=50,
+        widget=forms.PasswordInput(
+            attrs={
+                'readonly': True,
+                'class': 'form-control',
+                'placeholder': '',
+            }
+        )
+    )
+
+    password2 = forms.CharField(
+        required=True,
+        max_length=50,
+        widget=forms.PasswordInput(
+            attrs={
+                'readonly': True,
+                'class': 'form-control',
+                'placeholder': 'Повторите пароль',
+            }
+        )
+    )
+
+    avatar = forms.ImageField(
+        widget=forms.FileInput(
+            attrs={
+                'class': 'link-dark text-decoration-none align-middle',
+            }
+        )
+    )
+
+    class Meta:
+        model = get_user_model()
+        fields = ('name', 'email', 'password1', 'password2', 'avatar')
+
+
 class OrderForm(forms.Form):
     promocode = forms.CharField(
         required=False,
