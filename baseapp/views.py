@@ -106,7 +106,11 @@ def payment_result(request):
 
 @login_required(login_url='auth')
 def lk(request):
-    return render(request, 'lk.html')
+    subscriptions = Subscription.objects.filter(user_id=request.user.id)
+    context = {
+        'subscriptions': subscriptions,
+    }
+    return render(request, 'lk.html', context=context)
 
 
 def dish(request, dish_id=None):
