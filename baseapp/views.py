@@ -107,14 +107,17 @@ def payment_result(request):
 @login_required(login_url='auth')
 def lk(request):
 
-    # PersonalInfoProfileForm
-    if request.method == 'POST':
-        pass
     user = get_object_or_404(CustomUser, id=request.user.id)
     form = PersonalInfoProfileForm(instance=request.user)
+    if request.method == 'POST':
+        user.update(name=request.POST.get('name'))
+        form = PersonalInfoProfileForm(instance=user)
+
+    subscriptions = Subscription.objects.filter(user_id=request.user.id)
     context = {
         'user': user,
         'form': form,
+        'subscriptions': subscriptions,
     }
     return render(request, 'lk.html', context=context)
 

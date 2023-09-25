@@ -6,7 +6,7 @@ from celery import Celery
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'foodplan.settings')
 
-app = Celery('baseapp')
+app = Celery('foodplan')
 
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
