@@ -13,6 +13,7 @@ class CustomUserAdmin(admin.ModelAdmin):
 
 class DishIngredientItemInline(admin.TabularInline):
     model = DishIngredientItem
+    raw_id_fields = ['ingredient']
     extra = 0
 
 
@@ -70,6 +71,10 @@ class IngredientAdmin(admin.ModelAdmin):
     list_filter = [
         'name',
         'price',
+    ]
+
+    search_fields = [
+        'name'
     ]
 
     inlines = [

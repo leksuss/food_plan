@@ -135,7 +135,7 @@ class MenuCategory(models.Model):
     dish = models.ManyToManyField(
         Dish,
         verbose_name='Блюда',
-        related_name='menu_categories',
+        related_name='menu_category',
     )
 
     image = models.ImageField(
@@ -201,7 +201,7 @@ class Subscription(models.Model):
         blank=True,
     )
 
-    menu_categories = models.ForeignKey(
+    menu_category = models.ForeignKey(
         MenuCategory,
         verbose_name='Категория меню',
         on_delete=models.CASCADE,

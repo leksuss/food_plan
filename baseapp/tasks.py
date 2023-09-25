@@ -22,8 +22,10 @@ def update_subscriptions_menu():
             queryset=Allergy.objects.prefetch_related(
                 'ingredients'
             )
-        )
-    ).prefetch_related('meal_types').prefetch_related('menu_categories')
+        ),
+        'meal_types',
+        'menu_category',
+    )
 
     for subscription in subscriptions:
         subscription.today_dishes.set('')
@@ -31,6 +33,7 @@ def update_subscriptions_menu():
         subscription_allergies = subscription.allergies.all()
         dishes = Dish.objects.filter(
             is_free=False,
+            menu_category=subscription.menu_category
         ).prefetch_related(
             Prefetch(
                 'dish_items',
@@ -45,46 +48,52 @@ def update_subscriptions_menu():
             )
         )
 
-        allergies_ingredients = []
-        for allergy in subscription_allergies:
-            allergy_ingredients = []
-            for ingredient in allergy.ingredients.all():
-                for ingredient_item in ingredient.ingredient_items.all():
-                    ingredient = ingredient_item.ingredient
-                    if ingredient not in allergy_ingredients:
-                        allergy_ingredients.append(ingredient)
+        if subscription_allergies:
+            allergies_ingredients = []
+            for allergy in subscription_allergies:
+                allergy_ingredients = []
+                for ingredient in allergy.ingredients.all():
+                    for ingredient_item in ingredient.ingredient_items.all():
+                        ingredient = ingredient_item.ingredient
+                        if ingredient not in allergy_ingredients:
+                            allergy_ingredients.append(ingredient)
 
-            allergies_ingredients += allergy_ingredients
+                allergies_ingredients += allergy_ingredients
 
-        allergies_ingredients_counter = Counter(allergies_ingredients)
+            allergies_ingredients_counter = Counter(allergies_ingredients)
 
-        available_ingredients = [
-            ingredient for ingredient in allergies_ingredients_counter if
-            allergies_ingredients_counter[ingredient] == len(subscription_allergies)
-        ]
+            available_ingredients = [
+                ingredient for ingredient in allergies_ingredients_counter if
+                allergies_ingredients_counter[ingredient] == len(subscription_allergies)
+            ]
 
-        available_dishes = []
+            available_dishes = []
 
-        for dish in dishes:
-            available_dish = True
-            dish_items = dish.dish_items.all()
-            for dish_item in dish_items:
-                ingredient = dish_item.ingredient
-                if ingredient not in available_ingredients:
-                    available_dish = False
+            for dish in dishes:
+                available_dish = True
+                dish_items = dish.dish_items.all()
+                for dish_item in dish_items:
+                    ingredient = dish_item.ingredient
+                    if ingredient not in available_ingredients:
+                        available_dish = False
+                        break
 
-            if available_dish:
-                available_dishes.append(dish)
+                if available_dish:
+                    available_dishes.append(dish)
 
-        meal_type_dishes = []
+        else:
+            available_dishes = dishes
+
         for meal_type in subscription.meal_types.all():
+            meal_type_dishes = []
             for dish in available_dishes:
                 if dish.meal_type == meal_type:
                     meal_type_dishes.append(dish)
 
-            today_dish = random.choice(meal_type_dishes)
+            if meal_type_dishes:
+                today_dish = random.choice(meal_type_dishes)
 
-            subscription.today_dishes.add(today_dish)
-            subscription.save()
+                subscription.today_dishes.add(today_dish)
+                subscription.save()
 
 
