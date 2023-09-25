@@ -235,6 +235,10 @@ class Subscription(models.Model):
         blank=True,
     )
 
+    def calorie_count(self):
+        return sum([dish.calories for dish in self.today_dishes.all()])
+
+
     class Meta:
         verbose_name = 'Подписка'
         verbose_name_plural = 'Подписки'
