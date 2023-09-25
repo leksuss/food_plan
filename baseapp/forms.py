@@ -83,7 +83,6 @@ class PersonalInfoProfileForm(forms.ModelForm):
         max_length=100,
         widget=forms.TextInput(
             attrs={
-                'readonly': True,
                 'class': 'form-control',
             }
         )
@@ -115,6 +114,7 @@ class PersonalInfoProfileForm(forms.ModelForm):
         max_length=50,
         widget=forms.PasswordInput(
             attrs={
+                'readonly': True,
                 'class': 'form-control',
                 'placeholder': 'Повторите пароль',
             }

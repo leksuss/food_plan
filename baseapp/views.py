@@ -110,9 +110,9 @@ def lk(request):
     user = get_object_or_404(CustomUser, id=request.user.id)
     form = PersonalInfoProfileForm(instance=request.user)
     if request.method == 'POST':
-        user.update(name=request.POST.get('name'))
+        user.name = request.POST.get('name')
+        user.save()
         form = PersonalInfoProfileForm(instance=user)
-
     subscriptions = Subscription.objects.filter(user_id=request.user.id)
     context = {
         'user': user,
