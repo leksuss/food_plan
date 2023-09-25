@@ -25,6 +25,7 @@ from . import settings
 urlpatterns = [
     path('', baseapp.views.index, name='index'),
     path('order/', baseapp.views.order, name='order'),
+    path('payment_result/', baseapp.views.payment_result, name='payment_result'),
     path('dish/', baseapp.views.dish, name='free_dish'),
     path('dish/<int:dish_id>/', baseapp.views.dish, name='dish'),
     path('lk/', baseapp.views.lk, name='lk'),

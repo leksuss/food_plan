@@ -1,22 +1,21 @@
 {% extends 'base.html' %}
 
 {% load static %}
-
-{% block header_buttons %}
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse1"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse1">
         <ul class="navbar-nav w-100">
-
             <li class="nav-item align-items-center d-md-flex flex-grow-1 justify-content-end">
-                <button class="btn btn-outline-success me-2 shadow-none foodplan_green foodplan__border_green">Подписка</button>
-                <button class="btn btn-outline-success shadow-none foodplan_green foodplan__border_green">Войти</button>
+                {% block header_buttons %}
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'logout' %}" class="btn shadow-none btn-outline-success foodplan_green foodplan__border_green">Выйти</a>
+                    {% endif %}
+                {% endblock %}
             </li>
         </ul>
     </div>
-{% endblock %}
 
 {% block main %}
     <main style="margin-top: calc(2rem + 85px);">
