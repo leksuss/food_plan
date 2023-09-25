@@ -93,6 +93,9 @@ def payment_result(request):
         if payment['status'] == 'succeeded':
             is_paid = True
         subscription.is_paid = is_paid
+
+        subscription.set_today_dishes()
+
         subscription.save()
 
         context = {
