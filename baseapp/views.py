@@ -9,8 +9,8 @@ from django.http import Http404
 
 from yookassa import Configuration, Payment
 
-from .forms import CustomUserCreationForm, CustomAuthentication, OrderForm
-from .models import Dish, Subscription, MealType
+from .forms import CustomUserCreationForm, CustomAuthentication, OrderForm, PersonalInfoProfileForm
+from .models import Dish, Subscription, MealType, CustomUser
 from foodplan.settings import BASE_PRICE, BULK_DISCOUNT, SITE_URL, YKASSA_SHOP_ID, YKASSA_SECRET_KEY
 
 
@@ -106,7 +106,17 @@ def payment_result(request):
 
 @login_required(login_url='auth')
 def lk(request):
-    return render(request, 'lk.html')
+
+    # PersonalInfoProfileForm
+    if request.method == 'POST':
+        pass
+    user = get_object_or_404(CustomUser, id=request.user.id)
+    form = PersonalInfoProfileForm(instance=request.user)
+    context = {
+        'user': user,
+        'form': form,
+    }
+    return render(request, 'lk.html', context=context)
 
 
 def dish(request, dish_id=None):
