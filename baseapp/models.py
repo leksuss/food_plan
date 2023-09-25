@@ -135,7 +135,7 @@ class MenuCategory(models.Model):
     dish = models.ManyToManyField(
         Dish,
         verbose_name='Блюда',
-        related_name='menu_categories',
+        related_name='menu_category',
     )
 
     image = models.ImageField(
