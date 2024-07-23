@@ -21,6 +21,8 @@ def test_user_not_found():
         email='testemail.gmail.com',
         password='testpassword!!!!',
     )
+    id_user = user.id
+    user.delete()
 
     with pytest.raises(CustomUser.DoesNotExist):
-        CustomUser.objects.get(id=2)
+        CustomUser.objects.get(id=id_user)
